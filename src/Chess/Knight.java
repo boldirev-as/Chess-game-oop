@@ -1,0 +1,17 @@
+package Chess;
+
+public class Knight extends ChessFigure {
+    public Knight(boolean current_color) {
+        super.ChessFigure(current_color, "N");
+    }
+
+    @Override
+    public boolean canMove(Board board, int x, int y, int to_x, int to_y) {
+        return Math.abs(x - to_x) * Math.abs(y - to_y) == 2;
+    }
+
+    @Override
+    public boolean can_attack(Board board, int x, int y, int to_x, int to_y) {
+        return this.canMove(board, x, y, to_x, to_y);
+    }
+}

@@ -1,0 +1,18 @@
+package Chess;
+
+public class King extends ChessFigure {
+    public King(boolean color) {
+        super.ChessFigure(color, "K");
+    }
+
+    @Override
+    public boolean canMove(Board board, int x, int y, int to_x, int to_y) {
+        int direction = Math.abs(x - to_x) * Math.abs(y - to_y);
+        return direction == 1 || direction == 0;
+    }
+
+    @Override
+    public boolean can_attack(Board board, int x, int y, int to_x, int to_y) {
+        return this.canMove(board, x, y, to_x, to_y);
+    }
+}

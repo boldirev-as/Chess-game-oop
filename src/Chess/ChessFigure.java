@@ -1,29 +1,28 @@
 package Chess;
 
 public abstract class ChessFigure {
-    boolean color, state;
-    int x, y, id_f;
-    public static int id;
-    char symbol;
+    protected boolean color;
+    private String symbol;
+    protected boolean first_move = false;
 
-    public void moveFigure(int to_x, int to_y) {
-        x = to_x;
-        y = to_y;
-    }
-
-    public void ChessFigure(boolean color, byte x, byte y, char sym) {
+    public void ChessFigure(boolean color, String symbol) {
         this.color = color;
-        this.symbol = sym;
-        this.state = true;
-        this.x = x;
-        this.y = y;
+        this.symbol = symbol;
     }
 
-    public String toString() {
-        if (state && (symbol > '\u2652' && symbol < '\u2660'))
-            return String.valueOf(symbol);
-        else
-            return " ";
+    public boolean GetColor(){
+        return color;
     }
 
+    public String ToChar() {
+        return symbol;
+    }
+
+    public boolean first() {return first_move;}
+
+    public abstract boolean canMove(Board board, int x, int y,
+                                    int to_x, int to_y);
+
+    public abstract boolean can_attack(Board board, int x, int y,
+                                       int to_x, int to_y);
 }
