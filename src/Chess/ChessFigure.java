@@ -2,13 +2,17 @@ package Chess;
 
 public abstract class ChessFigure {
     protected boolean color;
-    private String symbol;
+    private final String symbol;
     protected boolean first_move = false;
+    protected char vision;
 
-    public void ChessFigure(boolean color, String symbol) {
+    public ChessFigure(boolean color, String symbol, char vision) {
         this.color = color;
         this.symbol = symbol;
+        this.vision = vision;
     }
+
+    public char getVision() {return vision;}
 
     public boolean GetColor(){
         return color;

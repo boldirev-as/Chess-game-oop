@@ -2,7 +2,7 @@ package Chess;
 
 public class King extends ChessFigure {
     public King(boolean color) {
-        super.ChessFigure(color, "K");
+        super(color, "K", color ? '\u2654' : '\u265A');
     }
 
     @Override

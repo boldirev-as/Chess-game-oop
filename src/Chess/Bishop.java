@@ -1,8 +1,12 @@
 package Chess;
 
+import javax.swing.*;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+
 public class Bishop extends ChessFigure {
     public Bishop(boolean color) {
-        super.ChessFigure(color, "B");
+        super(color, "B", color ? '\u2657' : '\u265D');
     }
 
     @Override

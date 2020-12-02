@@ -1,5 +1,7 @@
 package Chess;
 
+import java.util.Scanner;
+
 public class Board {
     protected ChessFigure[][] field;
     private boolean color = true;
@@ -16,7 +18,7 @@ public class Board {
                 new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK),
                 new Pawn(BLACK), new Pawn(BLACK)};
         field[5] = new ChessFigure[] {
-                new Empty(), new Queen(WHITE), new Empty(), new Empty(),
+                new Empty(), new Empty(), new Empty(), new Empty(),
                 new Empty(), new Empty(), new Empty(), new Empty()};
         field[4] = new ChessFigure[] {
                 new Empty(), new Empty(), new Empty(), new Empty(),
@@ -63,7 +65,7 @@ public class Board {
 
         if (piece.GetColor() != this.CurrentPlayColor()) return false;
 
-        if (this.GetPiece(to_x, to_y) instanceof Empty){
+        if (this.Cell(to_x, to_y).equals("  ")){
             if (!piece.canMove(this, x, y, to_x, to_y))
                 return false;
         }
@@ -73,10 +75,13 @@ public class Board {
         } else
             return false;
 
-        field[x][y] = new Empty();
-        field[to_x][to_y] = piece;
-        piece.first_move = false;
-        color = !this.CurrentPlayColor();
+        if (piece instanceof Pawn && (to_x == 0 || to_x == 7)) this.MoveAndPromotePawn(x, y, to_x, to_y);
+        else {
+            field[x][y] = new Empty();
+            field[to_x][to_y] = piece;
+            piece.first_move = false;
+            color = !this.CurrentPlayColor();
+        }
         return true;
     }
 
@@ -110,22 +115,32 @@ public class Board {
         return false;
     }
 
-    public boolean MoveAndPromotePawn(int x, int y, int to_x,
-                                      int to_y, String sym){
-        ChessFigure piece_pawn = this.GetPiece(x, y);
-        if (piece_pawn.ToChar().equals("P") &&
-                piece_pawn.canMove(this, x, y, to_x, to_y)){
-            boolean current_color = this.CurrentPlayColor();
-            if (to_x != (current_color ? 0 : 7)) return false;
-            ChessFigure new_piece = new Empty();
+    public void MoveAndPromotePawn(int x, int y, int to_x,
+                                      int to_y){
+        System.out.println("В какую фигуру хотите превратить пешку (1. Rook, 2. Knight, 3. Bishop, 4. Queen)");
+        Scanner sc = new Scanner(System.in);
+        String sym = sc.next();
+        os:
+        for (;;){
             switch (sym) {
-                case "R": new_piece = new Rook(current_color); break; //case 'B': new Bishop(current_color);
-                case "N": new_piece = new Knight(current_color); break; //case 'Q': new Queen(current_color);
-            };
-            if (new_piece instanceof Empty) return false;
-            field[x][y] = new Empty();
-            field[to_x][to_y] = new_piece;
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                    break os;
+            }
+            sym = sc.next();
         }
-        return false;
+        boolean current_color = this.CurrentPlayColor();
+        ChessFigure new_piece;
+        switch (sym) {
+            case "1": new_piece = new Rook(current_color); break;
+            case "3": new_piece = new Bishop(current_color); break;
+            case "2": new_piece = new Knight(current_color); break;
+            case "4": new_piece = new Queen(current_color); break;
+            default: throw new IllegalStateException("Unexpected value: " + sym);
+        }
+        field[x][y] = new Empty();
+        field[to_x][to_y] = new_piece;
     }
 }

@@ -2,7 +2,7 @@ package Chess;
 
 public class Knight extends ChessFigure {
     public Knight(boolean current_color) {
-        super.ChessFigure(current_color, "N");
+        super(current_color, "N", current_color ? '\u2658' : '\u265E');
     }
 
     @Override

@@ -9,7 +9,7 @@ public class Pawn extends ChessFigure implements Movable {
     int start_x;
 
     public Pawn(boolean color) {
-        super.ChessFigure(color, "P");
+        super(color, "P", color ? '\u2659' : '\u265F');
         this.start_x = color ? 1 : 6;
     }
 

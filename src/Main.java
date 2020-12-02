@@ -1,5 +1,4 @@
 import Chess.Board;
-import Chess.ChessFigure;
 
 import java.util.Scanner;
 
